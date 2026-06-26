@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dzaki Abyan — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0f0f;
+    --ink-2: #3a3a3a;
+    --ink-3: #777;
+    --rule: #e2e2e2;
+    --accent: #1a4ed8;
+    --accent-light: #eff3ff;
+    --bg: #fafafa;
+    --white: #fff;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,250,250,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 2rem;
+  }
+  .nav-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px; font-weight: 500;
+    color: var(--ink); text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px; color: var(--ink-3); text-decoration: none;
+    letter-spacing: 0.02em; transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* LAYOUT */
+  main { max-width: 900px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  section { padding-top: 5rem; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: var(--rule);
+  }
+
+  h2 { font-size: 24px; font-weight: 600; margin-bottom: 0.5rem; }
+  h3 { font-size: 16px; font-weight: 600; }
+
+  /* HERO */
+  #hero {
+    padding-top: 7rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: start;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 4rem;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px; color: var(--accent);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .hero-name {
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+  .hero-name strong { font-weight: 600; }
+  .hero-desc {
+    font-size: 16px; color: var(--ink-2);
+    max-width: 520px; line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+  .hero-contacts {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+  }
+  .contact-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 12px;
+    color: var(--ink-2);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 5px 12px;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+    background: var(--white);
+  }
+  .contact-pill:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-pill svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  .hero-badge {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.5rem;
+    min-width: 200px;
+    text-align: center;
+  }
+  .badge-num {
+    font-size: 36px; font-weight: 600;
+    color: var(--accent); line-height: 1;
+    margin-bottom: 4px;
+  }
+  .badge-label { font-size: 12px; color: var(--ink-3); }
+  .badge-divider { border: none; border-top: 1px solid var(--rule); margin: 1rem 0; }
+
+  /* SKILLS GRID */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .skill-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .skill-card-label {
+    font-family: var(--mono);
+    font-size: 11px; color: var(--accent);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 12px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 3px 8px;
+    color: var(--ink-2);
+  }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 2rem; margin-top: 1.5rem; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-meta { padding-top: 3px; }
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 11px; color: var(--ink-3);
+    line-height: 1.6;
+  }
+  .exp-company {
+    font-size: 12px; font-weight: 500;
+    color: var(--accent); margin-top: 6px;
+  }
+  .exp-role { font-size: 15px; font-weight: 600; margin-bottom: 0.4rem; }
+  .exp-location { font-size: 12px; color: var(--ink-3); margin-bottom: 0.75rem; }
+  .exp-bullets { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .exp-bullets li {
+    font-size: 14px; color: var(--ink-2);
+    padding-left: 14px; position: relative; line-height: 1.6;
+  }
+  .exp-bullets li::before {
+    content: '–';
+    position: absolute; left: 0;
+    color: var(--ink-3);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .project-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex; flex-direction: column;
+    transition: border-color 0.15s;
+  }
+  .project-card:hover { border-color: #b0c4fb; }
+  .project-card.featured { border-color: var(--accent); }
+  .project-card-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 0.75rem; gap: 1rem;
+  }
+  .project-tag {
+    font-family: var(--mono);
+    font-size: 10px; font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-light);
+    border-radius: 3px;
+    padding: 3px 8px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .project-title { font-size: 15px; font-weight: 600; margin-bottom: 0.5rem; }
+  .project-desc { font-size: 13px; color: var(--ink-2); line-height: 1.65; flex: 1; margin-bottom: 1rem; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+  .stack-tag {
+    font-family: var(--mono);
+    font-size: 11px; color: var(--ink-3);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 2px 7px;
+    background: var(--bg);
+  }
+
+  /* EDUCATION */
+  .edu-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.5rem 1.75rem;
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: start;
+  }
+  .edu-uni { font-size: 18px; font-weight: 600; margin-bottom: 3px; }
+  .edu-degree { font-size: 14px; color: var(--ink-2); margin-bottom: 8px; }
+  .edu-detail { font-size: 13px; color: var(--ink-3); }
+  .edu-gpa {
+    font-family: var(--mono);
+    text-align: right;
+  }
+  .edu-gpa-num { font-size: 28px; font-weight: 600; color: var(--accent); line-height: 1; }
+  .edu-gpa-label { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+  .edu-courses {
+    margin-top: 1rem; padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+    grid-column: 1 / -1;
+  }
+  .edu-courses-label { font-size: 11px; color: var(--ink-3); margin-bottom: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+  .courses-list { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  /* CERTS */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .cert-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .cert-icon {
+    width: 36px; height: 36px; border-radius: 6px;
+    background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .cert-icon svg { width: 18px; height: 18px; color: var(--accent); }
+  .cert-name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .cert-issuer { font-size: 12px; color: var(--ink-3); }
+  .cert-valid { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-top: 4px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+  .footer-inner { max-width: 900px; margin: 0 auto; }
+  .footer-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .footer-note { font-size: 12px; color: var(--ink-3); }
+
+  @media (max-width: 640px) {
+    #hero { grid-template-columns: 1fr; }
+    .hero-badge { display: none; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .edu-card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#hero">dzaki.abyan</a>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div>
+      <p class="hero-eyebrow">Electrical &amp; Electronic Engineer</p>
+      <h1 class="hero-name"><strong>Dzaki</strong><br>Abyan</h1>
+      <p class="hero-desc">
+        Fresh graduate dari Teknik Elektro Universitas Diponegoro dengan spesialisasi di sistem elektronik, embedded systems, dan web-based monitoring. Berpengalaman dalam pengembangan LMS, IT infrastructure, dan integrasi hardware-software.
+      </p>
+      <div class="hero-contacts">
+        <a class="contact-pill" href="mailto:mdzakiabyan@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          mdzakiabyan@gmail.com
+        </a>
+        <a class="contact-pill" href="tel:+6281369732874">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +62 813-6973-2874
+        </a>
+        <a class="contact-pill" href="https://linkedin.com/in/dzaki-abyan-724159225" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a class="contact-pill" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Palembang, Indonesia
+        </a>
+      </div>
+    </div>
+    <div class="hero-badge">
+      <div class="badge-num">3.27</div>
+      <div class="badge-label">GPA / 4.00</div>
+      <hr class="badge-divider">
+      <div class="badge-num" style="font-size:24px;">S.T.</div>
+      <div class="badge-label">Teknik Elektro<br>Universitas Diponegoro</div>
+      <hr class="badge-divider">
+      <div class="badge-num" style="font-size:20px;">2026</div>
+      <div class="badge-label">Lulus</div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">Keahlian</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-label">Engineering</div>
+        <div class="skill-tags">
+          <span class="tag">Circuit Analysis</span>
+          <span class="tag">Power Electronics</span>
+          <span class="tag">Control Systems</span>
+          <span class="tag">Embedded Systems</span>
+          <span class="tag">Microcontroller</span>
+          <span class="tag">PCB Reading</span>
+          <span class="tag">Instrumentasi</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Programming</div>
+        <div class="skill-tags">
+          <span class="tag">C / C++</span>
+          <span class="tag">Python</span>
+          <span class="tag">PHP</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">HTML / CSS</span>
+          <span class="tag">REST API</span>
+          <span class="tag">Laravel</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Tools & Platform</div>
+        <div class="skill-tags">
+          <span class="tag">Moodle LMS</span>
+          <span class="tag">PRTG Monitor</span>
+          <span class="tag">FortiGate</span>
+          <span class="tag">Canva</span>
+          <span class="tag">Figma</span>
+          <span class="tag">MS Office</span>
+          <span class="tag">Arduino IDE</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Soft Skills</div>
+        <div class="skill-tags">
+          <span class="tag">Technical Writing</span>
+          <span class="tag">Problem Solving</span>
+          <span class="tag">Team Coordination</span>
+          <span class="tag">Public Speaking</span>
+          <span class="tag">Project Management</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">Proyek</p>
+    <div class="projects-grid">
+
+      <div class="project-card featured">
+        <div class="project-card-top">
+          <div>
+            <div class="project-tag">Tugas Akhir · 2025–2026</div>
+          </div>
+        </div>
+        <div class="project-title">Solar-Powered Home Charging Station + Web Monitoring</div>
+        <div class="project-desc">
+          Merancang sistem pengisian baterai bertenaga surya dengan metode CC-CV (Constant Current–Constant Voltage) menggunakan mikrokontroler ESP32. Dilengkapi sistem monitoring web real-time yang menampilkan data tegangan, arus, daya, dan status pengisian secara live. Melakukan kalibrasi dan pengujian komponen menggunakan multimeter dan osiloskop.
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">ESP32</span>
+          <span class="stack-tag">C/C++</span>
+          <span class="stack-tag">Laravel</span>
+          <span class="stack-tag">PHP</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">REST API</span>
+          <span class="stack-tag">Power Electronics</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-top">
+          <div>
+            <div class="project-tag">Magang PLN · 2024</div>
+          </div>
+        </div>
+        <div class="project-title">Moodle LMS untuk Program OJT Karyawan</div>
+        <div class="project-desc">
+          Merancang dan membangun sistem e-learning berbasis Moodle untuk program On-the-Job Training (OJT) di PT PLN Indonesia Power, mencakup 200+ karyawan. Meliputi arsitektur kursus, role management, modul pelatihan, dan materi pembelajaran terstruktur.
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">Moodle</span>
+          <span class="stack-tag">LMS</span>
+          <span class="stack-tag">Instructional Design</span>
+          <span class="stack-tag">PHP</span>
+          <span class="stack-tag">MySQL</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-top">
+          <div>
+            <div class="project-tag">Akademik · 2022–2025</div>
+          </div>
+        </div>
+        <div class="project-title">Embedded Systems & Electronics Projects</div>
+        <div class="project-desc">
+          Berbagai proyek elektronik dan embedded system selama perkuliahan, mencakup desain rangkaian dengan Arduino dan ESP32, integrasi sensor dan aktuator, komunikasi serial (UART, I2C, SPI), serta pengujian dan debugging komponen elektronik.
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">Arduino</span>
+          <span class="stack-tag">ESP32</span>
+          <span class="stack-tag">C/C++</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">I2C / SPI</span>
+          <span class="stack-tag">Sensor Integration</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-top">
+          <div>
+            <div class="project-tag">Organisasi · 2024–2025</div>
+          </div>
+        </div>
+        <div class="project-title">Digital Campaign & Publication Materials</div>
+        <div class="project-desc">
+          Memproduksi materi publikasi dan kampanye digital untuk program-program organisasi di Biro Konsentrasi Teknologi Informasi Universitas Diponegoro, menggunakan Canva dan Figma untuk memastikan konsistensi visual dan branding.
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">Canva</span>
+          <span class="stack-tag">Figma</span>
+          <span class="stack-tag">Visual Design</span>
+          <span class="stack-tag">Content Creation</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">Pengalaman</p>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Jul 2024<br>Sep 2024</div>
+          <div class="exp-company">PT PLN Indonesia Power</div>
+        </div>
+        <div>
+          <div class="exp-role">Information Technology Intern</div>
+          <div class="exp-location">Jakarta, Indonesia</div>
+          <ul class="exp-bullets">
+            <li>Merancang dan mengembangkan Moodle LMS untuk program OJT 200+ karyawan, mencakup arsitektur kursus, role management, dan modul pelatihan.</li>
+            <li>Monitoring sistem jaringan menggunakan PRTG, melakukan troubleshooting infrastruktur IT, dan mendokumentasikan proses secara sistematis.</li>
+            <li>Konfigurasi keamanan jaringan menggunakan FortiGate, FortiAnalyzer, dan Kaspersky; integrasi CCTV fiber optic menggunakan Nx Optix.</li>
+            <li>Melakukan crimping kabel UTP, verifikasi topologi jaringan, dan konfigurasi sistem berbasis Windows dan domain.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Feb 2024<br>Feb 2025</div>
+          <div class="exp-company">Universitas Diponegoro</div>
+        </div>
+        <div>
+          <div class="exp-role">Asisten Lab Algoritma & Pemrograman</div>
+          <div class="exp-location">Semarang, Jawa Tengah</div>
+          <ul class="exp-bullets">
+            <li>Memfasilitasi sesi praktikum untuk 30+ mahasiswa per semester, membuat modul panduan teknis dan step-by-step practicum guide.</li>
+            <li>Mengevaluasi output mahasiswa dan memberikan feedback korektif untuk memperkuat pemahaman algoritma dan logika pemrograman.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Feb 2024<br>Jun 2025</div>
+          <div class="exp-company">Biro Konsentrasi TI</div>
+        </div>
+        <div>
+          <div class="exp-role">Staff Divisi Media</div>
+          <div class="exp-location">Semarang, Jawa Tengah</div>
+          <ul class="exp-bullets">
+            <li>Memproduksi materi publikasi dan kampanye digital menggunakan Canva dan Figma untuk berbagai program organisasi.</li>
+            <li>Berkoordinasi dengan anggota panitia untuk memastikan konsistensi visual dan penyampaian informasi di semua platform digital.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Okt 2019<br>Okt 2021</div>
+          <div class="exp-company">MPK SMA Plus N 17</div>
+        </div>
+        <div>
+          <div class="exp-role">Wakil Ketua I — Majelis Perwakilan Kelas</div>
+          <div class="exp-location">Palembang, Sumatera Selatan</div>
+          <ul class="exp-bullets">
+            <li>Memimpin koordinasi pemilihan ketua OSIS dan mengelola panitia, jadwal, serta acara publik untuk 1.000+ siswa.</li>
+            <li>Mengembangkan kemampuan kepemimpinan, komunikasi lintas fungsi, dan manajemen acara.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">Pendidikan</p>
+    <div class="edu-card">
+      <div>
+        <div class="edu-uni">Universitas Diponegoro</div>
+        <div class="edu-degree">S1 Teknik Elektro dan Elektronika</div>
+        <div class="edu-detail">Agustus 2021 – Juni 2026 · Semarang, Jawa Tengah</div>
+      </div>
+      <div class="edu-gpa">
+        <div class="edu-gpa-num">3.27</div>
+        <div class="edu-gpa-label">dari 4.00</div>
+      </div>
+      <div class="edu-courses">
+        <div class="edu-courses-label">Mata Kuliah Relevan</div>
+        <div class="courses-list">
+          <span class="tag">Elektronika</span>
+          <span class="tag">Sistem Kendali</span>
+          <span class="tag">Power Electronics</span>
+          <span class="tag">Mikrokontroler</span>
+          <span class="tag">Instrumentasi & Pengukuran</span>
+          <span class="tag">Pemrosesan Sinyal</span>
+          <span class="tag">Sistem Digital</span>
+          <span class="tag">Analisis Rangkaian</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTS -->
+    <div style="margin-top: 2.5rem;">
+      <p class="section-label">Sertifikasi</p>
+      <div class="certs-grid">
+        <div class="cert-card">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <div>
+            <div class="cert-name">HCIA-AI Certification</div>
+            <div class="cert-issuer">Huawei Technologies</div>
+            <div class="cert-valid">Jun 2024 – Jun 2027</div>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <div>
+            <div class="cert-name">HCIA-Datacom Certification</div>
+            <div class="cert-issuer">Huawei Technologies</div>
+            <div class="cert-valid">Jun 2024 – Jun 2027</div>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <div>
+            <div class="cert-name">TOEFL ITP</div>
+            <div class="cert-issuer">English Proficiency — SEU</div>
+            <div class="cert-valid">Apr 2026 – Apr 2028</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-name">Dzaki Abyan</div>
+    <div class="footer-note">mdzakiabyan@gmail.com · +62 813-6973-2874 · Palembang, Indonesia</div>
+  </div>
+</footer>
+
+</body>
+</html>
